@@ -143,4 +143,4 @@ When a change needs calx or morphe to change as well, commit them in dependency 
 
 ## 9. Current State
 
-As of 2026-10-21, only design documents exist, and there is no code. The remote is `https://github.com/huangwanhong-maker/physis`; the repository has not yet been created on GitHub.
+As of 2026-10-22, only design documents exist, and there is no code. The repository is published at `https://github.com/huangwanhong-maker/physis`.
