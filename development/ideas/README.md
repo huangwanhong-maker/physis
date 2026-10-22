@@ -15,4 +15,4 @@ This is the cheapest place to write a thought down. An idea here may be wrong, a
 | Date | Idea | Status |
 |---|---|---|
 
-No ideas are recorded yet. Ideas that span libraries live in the laboratory's `development/ideas/`.
+No ideas are recorded yet. Ideas that span libraries live in the [ideas of The Science Infrastructures](https://github.com/huangwanhong-maker/The-Science-Infrastructures/tree/main/development/ideas).

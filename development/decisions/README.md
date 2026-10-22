@@ -11,6 +11,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 |---|---|---|
 | [0001](0001-record-architecture-decisions.md) | Record architecture decisions | Accepted |
 | [0002](0002-scope-boundaries-and-dependencies.md) | Scope, boundaries and dependencies | Accepted |
+| [0003](0003-provisional-javascript-stand-in.md) | A provisional JavaScript stand-in | Accepted, provisionally |
 
 ## 2. Template
 

@@ -2,7 +2,7 @@
 
 This file guides Claude Code in the physis repository.
 
-physis is one of three libraries developed for the [Integrative Astronomy, Geography, Oceanography Laboratory](https://github.com/huangwanhong-maker/Integrative_Astronomy_Geography_Oceanography_Laboratory). The laboratory includes it as the git submodule `lib/physis`. It is a project in its own right and must make sense without the laboratory.
+physis is one of the foundation libraries of [The Science Infrastructures](https://github.com/huangwanhong-maker/The-Science-Infrastructures), which includes it as the git submodule `foundations/physis`. It is a project in its own right and must make sense without the infrastructure.
 
 ## 1. Purpose and Scope
 
@@ -25,13 +25,13 @@ It builds on two sibling libraries:
 
 Out of scope:
 
-- **Particular bodies and datasets.** These belong to the laboratory. Examples: the Earth's ellipsoid parameters, lunar ephemerides, seawater formulations such as TEOS-10, and astronomical time scales.
+- **Particular bodies and datasets.** These belong to the domains of The Science Infrastructures. Examples: the Earth's ellipsoid parameters, lunar ephemerides, seawater formulations such as TEOS-10, and astronomical time scales.
 - **Exact algebraic and topological structures.** These belong to morphe.
 - **Domain-free numerics and devices.** These belong to calx.
 
 ## 2. Invariants
 
-1. **Dependencies.** physis depends only on calx and morphe among project libraries, and never on the laboratory.
+1. **Dependencies.** physis depends only on calx and morphe among project libraries, and never on the infrastructure's domains or applications.
 2. **No particular bodies.** Parameters of particular bodies are inputs, never built-in defaults.
 3. **Explicit units.**
    - Every quantity at a public interface carries its units.
@@ -56,6 +56,7 @@ physis shares its governing principle with its sibling repositories: **modular, 
 
 ```
 physis/
+├── js/            a provisional JavaScript stand-in (ADR 0003)
 ├── docs/          architecture
 └── development/   decisions · ideas
 ```
@@ -88,20 +89,20 @@ Module dependencies follow [architecture §2](docs/architecture.md).
 
 ### 5.4 Shared Conventions
 
-calx, morphe, physis and the laboratory keep these conventions identical:
+calx, morphe, physis and the infrastructure keep these conventions identical:
 
 - writing style;
 - status vocabulary;
 - decision and idea conventions.
 
-Change them in every repository of [The Science Infrastructures](https://github.com/huangwanhong-maker/The-Science-Infrastructures) together: the three libraries, the laboratories and the umbrella.
+Change them in every repository of [The Science Infrastructures](https://github.com/huangwanhong-maker/The-Science-Infrastructures) together: the foundation libraries and the infrastructure's repository.
 
-### 5.5 Working Inside the Laboratory
+### 5.5 Working Inside the Infrastructure
 
-When you edit physis inside the laboratory's `lib/physis`:
+When you edit physis inside the infrastructure's `foundations/physis`:
 
 1. commit in physis first;
-2. then commit the updated pointer in the laboratory.
+2. then commit the updated pointer in the infrastructure.
 
 When a change needs calx or morphe to change as well, commit them in dependency order: calx and morphe first, then physis.
 
@@ -123,9 +124,9 @@ When a change needs calx or morphe to change as well, commit them in dependency 
 
 ## 7. Technology
 
-- **Language: C++.** This follows laboratory ADR 0003 and decision 0002 here.
+- **Language: C++.** This follows ADR 0003 of The Science Infrastructures and decision 0002 here.
 - **Provisional:** C++20, CMake, and nanobind for Python bindings.
-- **Dependency resolution.** In standalone builds, calx and morphe are fetched through the build system. Inside the laboratory, physis uses the build targets of `lib/calx` and `lib/morphe` that already exist. Never nest submodules.
+- **Dependency resolution.** In standalone builds, calx and morphe are fetched through the build system. Inside the infrastructure, physis uses the build targets of `foundations/calx` and `foundations/morphe` that already exist. Never nest submodules.
 - **Licences.** physis is MIT-licensed. Check every dependency before adopting it.
 
 ## 8. Open Decisions
@@ -135,7 +136,7 @@ When a change needs calx or morphe to change as well, commit them in dependency 
    - The relation to morphe's free abelian groups.
    - The relation to calx's typed IR annotations.
 2. **Sign and normalisation conventions** (§6).
-3. **The first modules.** The laboratory's Phase 1 needs:
+3. **The first modules.** The infrastructure's first vertical slice needs:
    - `units`;
    - rotations in `geometry`;
    - spherical-harmonic potential theory in `gravitation`.
@@ -143,4 +144,4 @@ When a change needs calx or morphe to change as well, commit them in dependency 
 
 ## 9. Current State
 
-As of 2026-10-22, only design documents exist, and there is no code. The repository is published at `https://github.com/huangwanhong-maker/physis`.
+As of 2026-10-22, design documents exist, and the first code: a provisional JavaScript stand-in for `discretisation` (the spectral transform on the sphere, and values on a longitude-latitude grid), with its tests ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)). The repository is published at `https://github.com/huangwanhong-maker/physis`.

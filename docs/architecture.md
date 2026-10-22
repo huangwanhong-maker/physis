@@ -6,7 +6,7 @@
 
 ### 1.1 General Laws, Not Particular Bodies
 
-physis knows potentials, fluids, radiation and geometry. It does not know about WGS 84, the Moon's orbit or ERA5. Parameters of particular bodies arrive as inputs from the caller, which is usually the laboratory.
+physis knows potentials, fluids, radiation and geometry. It does not know about WGS 84, the Moon's orbit or ERA5. Parameters of particular bodies arrive as inputs from the caller, which is usually a domain of The Science Infrastructures.
 
 ### 1.2 Where Structures Meet Numbers
 
@@ -58,7 +58,7 @@ physis ──► calx     numerical methods, computation stack
    └─────► morphe   structures: groups, complexes, exact arithmetic
 ```
 
-- **Inside the laboratory.** All three libraries are siblings under `lib/`, and physis uses the existing calx and morphe build targets.
+- **Inside the infrastructure.** All three libraries are siblings under `foundations/`, and physis uses the existing calx and morphe build targets.
 - **Built on its own.** physis fetches calx and morphe at pinned versions.
 - **Never nest submodules.** Nesting would produce two copies of the same library.
 
