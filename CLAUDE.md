@@ -94,7 +94,7 @@ calx, morphe, physis and the laboratory keep these conventions identical:
 - status vocabulary;
 - decision and idea conventions.
 
-Change them in all four repositories together.
+Change them in every repository of [The Science Infrastructures](https://github.com/huangwanhong-maker/The-Science-Infrastructures) together: the three libraries, the laboratories and the umbrella.
 
 ### 5.5 Working Inside the Laboratory
 
