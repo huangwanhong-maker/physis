@@ -20,6 +20,9 @@
 | Gauge transformations | U_e ↦ g_tail U_e g_head⁻¹ | `gauge` |
 | Holonomy of a 2-cell | the product of the link variables along its attaching word, from its base: U_f = Π U_e^{±1} | `gauge` |
 | Wilson action | S = β Σ_f (1 − Re tr U_f / N) | `gauge` |
+| Invariant field theories (decision 0006) | complex fields φ of rank r, Gaussian measure with ⟨φ_a φ̄_b⟩ = δ_ab; an interaction is the trace invariant I_B of its bubble, entering as e^{−λ_B I_B}; a Feynman graph's N-power is its number of faces of colours (0, i), colour 0 the propagators | `field_theory`, `quantum_gravity` |
+| Bubbles | bipartite r-coloured graphs, black vertices φ, white vertices φ̄, colour i contracting the i-th indices | morphe `bubbles.hpp` |
+| Condensate cosmology | Planck units, ħ = c = 1 with G a parameter; time is relational, the value of a massless scalar field φ | `quantum_gravity` |
 | Fourier transform, spherical harmonics | to be fixed with `analysis` and `discretisation` | — |
 
 ## 2. Notation

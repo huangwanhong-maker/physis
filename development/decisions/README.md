@@ -14,6 +14,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0003](0003-provisional-javascript-stand-in.md) | A provisional JavaScript stand-in | Accepted, provisionally |
 | [0004](0004-the-continuum-units-and-dynamics.md) | The continuum: new modules, and the first C++ in units and dynamics | Accepted, provisionally |
 | [0005](0005-symmetry-spacetime-fields-and-gauge.md) | Symmetry, spacetime, fields, gauge and quantum gravity | Accepted, provisionally |
+| [0006](0006-the-generation-of-spacetime-by-field-theories.md) | The generation of spacetime by field theories | Accepted, provisionally |
 
 ## 2. Template
 
