@@ -1,0 +1,8 @@
+add_library(physis_dynamics INTERFACE)
+add_library(physis::dynamics ALIAS physis_dynamics)
+target_include_directories(physis_dynamics INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_dynamics INTERFACE cxx_std_20)
+target_link_libraries(physis_dynamics INTERFACE calx::linalg calx::integrators)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_dynamics SOURCES tests/check_dynamics.cpp LIBRARIES physis::dynamics)
+endif()

@@ -17,8 +17,14 @@ physis is one of the foundation libraries of [The Science Infrastructures](https
 
 | Module | Content | Status |
 |---|---|---|
-| `units` | Physical dimensions as a free abelian group over the SI base units; quantities and conversions; CODATA constants, versioned | planned |
-| `geometry` | Euclidean, spherical and ellipsoidal geometry. Rotations: SO(3), SE(3), quaternions. Differential and Riemannian geometry: manifolds, metrics, connections, geodesics, curvature, differential forms. Map projections. | planned |
+| [`units`](units/) | Physical dimensions as a free abelian group over the SI base units; quantities and conversions; CODATA constants, versioned | draft: dimensions and quantities |
+| `geometry` | Euclidean, affine and projective geometry; spherical and ellipsoidal geometry; rotations (SO(3), SE(3), quaternions); manifolds, metrics, connections, geodesics, curvature, differential forms; Lie groups and algebras acting on space; information geometry; map projections | planned |
+| `computational_geometry` | Convex hulls, triangulations, Voronoi diagrams, meshes; spatial indices; robust predicates | planned |
+| `analysis` | Real and complex analysis as computation needs it; function spaces, operators, spectral theory; Fourier and harmonic analysis on groups and spheres; integral transforms and equations; calculus of variations | planned |
+| [`dynamics`](dynamics/) | State spaces, vector fields and flows; linear systems and their exact propagators; hybrid systems (flow, guard, jump); discrete-time, delay and stochastic dynamics; stability, bifurcation, Lyapunov exponents, invariant measures | draft: linear propagators, hybrid systems |
+| `control` | Systems with inputs and outputs: controllability, observability, feedback, optimal and model-predictive control, system identification | planned |
+| `quantum` | Hilbert spaces, states and operators; spins and qubits; unitary and open (GKSL) dynamics, as Liouvillians or generalised Bloch vectors; quantum trajectories; measurement; mean-field closures | planned |
+| `statistical_mechanics` | Ensembles and partition functions; lattice and spin models (Ising, Potts, Heisenberg, transverse-field); Glauber and Metropolis dynamics; mean-field theory and phase transitions | planned |
 | `discretisation` | Finite-difference, finite-volume, finite-element and spectral methods. Structure-preserving discretisation: discrete exterior calculus on morphe's complexes. Geometric and Lie-group integrators. | planned; a JavaScript stand-in for the spectral transform on the sphere and longitude-latitude grids is in [`js/`](js/) |
 | `mechanics` | Lagrangian and Hamiltonian mechanics; rigid-body rotation; two-body and n-body problems; perturbation theory | planned |
 | `gravitation` | Potential theory; spherical-harmonic gravity fields; tidal potentials. General relativity: metrics, post-Newtonian dynamics, light propagation. | planned |
@@ -47,7 +53,15 @@ No library of the project depends on the infrastructure's domains or application
 
 ## 5. Status
 
-**Planned (2026-10-21), with a first stand-in (2026-10-22).** Design documents exist, and a provisional JavaScript stand-in for `discretisation`, tested, in [`js/`](js/) ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)). There is no C++ yet.
+**Draft (2026-10-23).** The first C++ modules, `units` and `dynamics`, are written and checked, as the neuroscience domain's spiking networks need them ([ADR 0004](development/decisions/0004-the-continuum-units-and-dynamics.md)); a provisional JavaScript stand-in for `discretisation` is in [`js/`](js/) ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)). The rest is designed and planned; the place of each module in the whole of the project's mathematics is the infrastructure's [map of the mathematics](https://github.com/huangwanhong-maker/The-Science-Infrastructures/blob/main/docs/mathematics.md).
+
+Inside The Science Infrastructures, build and check with CMake 3.20 or later (calx is taken from `../calx`):
+
+```
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+ctest --test-dir build --output-on-failure
+```
 
 ## 6. License
 

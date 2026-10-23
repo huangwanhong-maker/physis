@@ -1,0 +1,7 @@
+add_library(physis_units INTERFACE)
+add_library(physis::units ALIAS physis_units)
+target_include_directories(physis_units INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_units INTERFACE cxx_std_20)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_units SOURCES tests/check_units.cpp LIBRARIES physis::units)
+endif()

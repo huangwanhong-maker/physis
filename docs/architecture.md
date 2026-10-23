@@ -41,8 +41,14 @@ Physical dimensions form the free abelian group ℤ⁷ over the seven SI base un
 |---|---|
 | `units` | — |
 | `geometry` | `units` |
-| `discretisation` | `geometry` |
-| `mechanics` | `geometry`, `discretisation` |
+| `computational_geometry` | `geometry` |
+| `analysis` | `units` |
+| `dynamics` | `units` |
+| `control` | `dynamics` |
+| `quantum` | `geometry`, `dynamics` |
+| `statistical_mechanics` | `thermodynamics`, `dynamics`, `quantum` |
+| `discretisation` | `geometry`, `analysis`, `dynamics` |
+| `mechanics` | `geometry`, `discretisation`, `dynamics` |
 | `gravitation` | `geometry`, `mechanics` |
 | `thermodynamics` | `units` |
 | `continuum` | `geometry`, `discretisation`, `thermodynamics` |
@@ -67,6 +73,7 @@ physis ──► calx     numerical methods, computation stack
 ```
 <module>/
 ├── README.md                 purpose, status, dependencies, references, open questions
+├── CMakeLists.txt            the target physis::<module>, and its checks
 ├── include/physis/<module>/  public headers
 ├── src/                      implementation
 ├── tests/                    unit tests

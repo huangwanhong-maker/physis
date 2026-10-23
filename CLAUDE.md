@@ -9,7 +9,10 @@ physis is one of the foundation libraries of [The Science Infrastructures](https
 physis implements general physical laws, and the geometry they are written in:
 
 - units and constants;
-- geometry;
+- geometry, and computational geometry;
+- analysis;
+- dynamical systems and control;
+- quantum theory and statistical mechanics;
 - structure-preserving discretisation;
 - mechanics;
 - gravitation;
@@ -58,10 +61,10 @@ physis shares its governing principle with its sibling repositories: **modular, 
 physis/
 ├── js/            a provisional JavaScript stand-in (ADR 0003)
 ├── docs/          architecture
-└── development/   decisions · ideas
+└── development/   decisions · ideas · release notes
 ```
 
-Each module directory is created when its first content is written. The modules are `units/`, `geometry/`, `discretisation/`, `mechanics/`, `gravitation/`, `thermodynamics/`, `continuum/`, `chemistry/` and `radiation/`. Until a module has content, it is listed as `planned` in the README.
+Each module directory is created when its first content is written. The modules are `units/`, `geometry/`, `computational_geometry/`, `analysis/`, `dynamics/`, `control/`, `quantum/`, `statistical_mechanics/`, `discretisation/`, `mechanics/`, `gravitation/`, `thermodynamics/`, `continuum/`, `chemistry/` and `radiation/` (ADR 0004 added six). Until a module has content, it is listed as `planned` in the README. Written so far: `units/` and `dynamics/`, each with `CMakeLists.txt`, `include/physis/<module>/` and `tests/`; the root `CMakeLists.txt` adds them and, inside the infrastructure, the sibling calx.
 
 ## 5. Working Procedures
 
@@ -81,6 +84,7 @@ Module dependencies follow [architecture §2](docs/architecture.md).
 
 - Decisions are numbered records in `development/decisions/`. Records are never rewritten; a later record supersedes an earlier one.
 - Ideas are files named `development/ideas/YYYY-MM-DD-slug.md`, with status `seed`, `promoted` or `abandoned`.
+- **Release notes.** At each commit, add to `development/release-notes/YYYY-MM-DD.md` (one file per day, one short section per commit) a concise summary in plain prose of what is new, what one can now do and what works better, not a list of changes (the git log keeps those); not between commits. This convention is shared with the sibling repositories.
 
 ### 5.3 Change Discipline
 
@@ -93,7 +97,7 @@ calx, morphe, physis and the infrastructure keep these conventions identical:
 
 - writing style;
 - status vocabulary;
-- decision and idea conventions.
+- decision, idea and release-note conventions.
 
 Change them in every repository of [The Science Infrastructures](https://github.com/huangwanhong-maker/The-Science-Infrastructures) together: the foundation libraries and the infrastructure's repository.
 
@@ -125,14 +129,14 @@ When a change needs calx or morphe to change as well, commit them in dependency 
 ## 7. Technology
 
 - **Language: C++.** This follows ADR 0003 of The Science Infrastructures and decision 0002 here.
-- **Provisional:** C++20, CMake, and nanobind for Python bindings.
+- **Provisional:** C++20, CMake 3.20 or later (in use since ADR 0004; checks are programs on calx's `verification`, registered with CTest), and nanobind for Python bindings. On the development machine the compiler is GCC in WSL.
 - **Dependency resolution.** In standalone builds, calx and morphe are fetched through the build system. Inside the infrastructure, physis uses the build targets of `foundations/calx` and `foundations/morphe` that already exist. Never nest submodules.
 - **Licences.** physis is MIT-licensed. Check every dependency before adopting it.
 
 ## 8. Open Decisions
 
-1. **How to represent units.**
-   - Compile-time C++ types, runtime dimension vectors, or both.
+1. **How to represent units.** Run-time dimension vectors are in use since ADR 0004, checked where quantities are read; still open:
+   - compile-time C++ types beside them;
    - The relation to morphe's free abelian groups.
    - The relation to calx's typed IR annotations.
 2. **Sign and normalisation conventions** (§6).
@@ -144,4 +148,4 @@ When a change needs calx or morphe to change as well, commit them in dependency 
 
 ## 9. Current State
 
-As of 2026-10-22, design documents exist, and the first code: a provisional JavaScript stand-in for `discretisation` (the spectral transform on the sphere, and values on a longitude-latitude grid), with its tests ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)). The repository is published at `https://github.com/huangwanhong-maker/physis`.
+As of 2026-10-23, design documents exist; a provisional JavaScript stand-in for `discretisation` (the spectral transform on the sphere, and values on a longitude-latitude grid), with its tests ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)); and the first C++, `units` and `dynamics`, with 2 check programs and 14 checks ([ADR 0004](development/decisions/0004-the-continuum-units-and-dynamics.md)). The repository is published at `https://github.com/huangwanhong-maker/physis`.
