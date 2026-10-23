@@ -13,7 +13,12 @@
 //   error in its time is below h);
 // - a jump x <- R(x) applied at the event;
 // - a dwell of duration dwell(p) after the event, during which the components marked
-//   `held` are held still and the guard is not tested (the refractory period of a neuron).
+//   `held` are held still and the guard is not tested (the refractory period of a neuron);
+// - optionally, a silent jump settle(p, x), applied at every grid point after the flow and
+//   before the guard is tested, which emits no event: a second jump set whose jumps are
+//   not observed (Goebel, Sanfelice and Teel allow any number). It gives a guard hysteresis,
+//   so that an event is an upward crossing counted once: a discrete component is cleared
+//   by the jump and set again by settle() once the state has fallen back.
 //
 // A system is a type with static members, checked by the concepts below; its parameters
 // are a struct, so that one type serves every parameter set and the compiler generates the
@@ -73,6 +78,11 @@ concept Hybrid = (LinearFlow<S> || NonlinearFlow<S>) && requires(const typename 
   { S::jump(p, x) };
   { S::dwell(p) } -> std::convertible_to<double>;
   { S::held } -> std::convertible_to<std::array<bool, S::n>>;
+};
+
+template <class S>
+concept Settling = System<S> && requires(const typename S::Params& p, State<S::n>& x) {
+  { S::settle(p, x) };
 };
 
 // The exact propagator of a linear system over h, with `held` components still. A system
@@ -171,6 +181,7 @@ Trajectory<S::n> simulate(const typename S::Params& p, State<S::n> x, const std:
     const bool hold = dwelling > 0;
     if constexpr (LinearFlow<S>) P[hold ? 1 : 0].apply(x, uk);
     else step<S>(p, x, uk, h, how, hold ? S::held : none, sub, scale);
+    if constexpr (Settling<S>) S::settle(p, x);
     if (hold) dwelling--;
     else if (S::guard(p, x)) {
       out.events.push_back((k + 1) * h);

@@ -9,7 +9,7 @@ A dynamical system as an object: its state space, its flow, its events and what 
 ## 2. Concepts
 
 - **Linear systems** x' = A x + B u + c are integrated exactly over a step by the exponential of the augmented matrix [[A, B, c], [0, 0, 0]] h (Van Loan 1978), whose blocks give e^{Ah} and the integrals of e^{As} against the input and the constant (Rotter and Diesmann 1999). Components may be held still. In SI units the components of one state can differ by ten orders of magnitude, so the matrix is made dimensionless by the components' typical sizes, rounded to powers of two, before it is exponentiated.
-- **Hybrid systems** flow between events, fire when the state enters a guard set (tested on the grid), jump, and dwell for a while with some components held: the integrate-and-fire neuron and its refractory period are the type.
+- **Hybrid systems** flow between events, fire when the state enters a guard set (tested on the grid), jump, and dwell for a while with some components held: the integrate-and-fire neuron and its refractory period are the type. A system may also declare a silent jump, `settle`, applied after each step's flow and emitting no event: a second jump set (Goebel, Sanfelice and Teel 2012), with which a guard is given hysteresis, so that an upward crossing is counted once.
 - **Gated systems** declare, for each gate, its steady state and time constant, and are integrated by Rush and Larsen's exponential method.
 
 ## 3. Content
@@ -17,7 +17,7 @@ A dynamical system as an object: its state space, its flow, its events and what 
 | Header | Content |
 |---|---|
 | `linear.hpp` | `Propagator<N, M>`, `propagator(A, B, c, h, held, sizes)` |
-| `hybrid.hpp` | The concepts `System`, `LinearFlow`, `NonlinearFlow`, `Gated`, `Hybrid`; `linear_propagator<S>`; `step<S>` by Euler, Heun, RK4, Dormand–Prince or Rush–Larsen with held components; `simulate<S>`, one trajectory with its events |
+| `hybrid.hpp` | The concepts `System`, `LinearFlow`, `NonlinearFlow`, `Gated`, `Hybrid`, `Settling`; `linear_propagator<S>`; `step<S>` by Euler, Heun, RK4, Dormand–Prince or Rush–Larsen with held components; `simulate<S>`, one trajectory with its events |
 
 ## 4. Checks
 
