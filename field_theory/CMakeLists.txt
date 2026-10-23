@@ -1,0 +1,8 @@
+add_library(physis_field_theory INTERFACE)
+add_library(physis::field_theory ALIAS physis_field_theory)
+target_include_directories(physis_field_theory INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_field_theory INTERFACE cxx_std_20)
+target_link_libraries(physis_field_theory INTERFACE morphe::topology morphe::arithmetic calx::linalg calx::random calx::quadrature)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_field_theory SOURCES tests/check_field_theory.cpp LIBRARIES physis::field_theory)
+endif()

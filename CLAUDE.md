@@ -13,6 +13,10 @@ physis implements general physical laws, and the geometry they are written in:
 - analysis;
 - dynamical systems and control;
 - quantum theory and statistical mechanics;
+- symmetry: Lie groups and their representations;
+- spacetime, continuous and discrete;
+- field theory, gauge theory and quantum gravity (spin foams, group field theory);
+- electromagnetism;
 - structure-preserving discretisation;
 - mechanics;
 - gravitation;
@@ -64,7 +68,7 @@ physis/
 └── development/   decisions · ideas · release notes
 ```
 
-Each module directory is created when its first content is written. The modules are `units/`, `geometry/`, `computational_geometry/`, `analysis/`, `dynamics/`, `control/`, `quantum/`, `statistical_mechanics/`, `discretisation/`, `mechanics/`, `gravitation/`, `thermodynamics/`, `continuum/`, `chemistry/` and `radiation/` (ADR 0004 added six). Until a module has content, it is listed as `planned` in the README. Written so far: `units/` and `dynamics/`, each with `CMakeLists.txt`, `include/physis/<module>/` and `tests/`; the root `CMakeLists.txt` adds them and, inside the infrastructure, the sibling calx.
+Each module directory is created when its first content is written. The modules are `units/`, `symmetry/`, `geometry/`, `computational_geometry/`, `analysis/`, `dynamics/`, `control/`, `quantum/`, `statistical_mechanics/`, `discretisation/`, `spacetime/`, `field_theory/`, `gauge/`, `quantum_gravity/`, `electromagnetism/`, `mechanics/`, `gravitation/`, `thermodynamics/`, `continuum/`, `chemistry/` and `radiation/` (ADR 0004 added six, decision 0005 six more). Until a module has content, it is listed as `planned` in the README. Written so far: `units/`, `dynamics/`, `quantum/`, `symmetry/`, `geometry/` (in part), `spacetime/`, `field_theory/`, `gauge/` and `quantum_gravity/`, each with `CMakeLists.txt`, `include/physis/<module>/` and `tests/`; the root `CMakeLists.txt` adds them and, inside the infrastructure, the siblings calx and morphe. Conventions are in `docs/glossary.md`.
 
 ## 5. Working Procedures
 
@@ -139,13 +143,13 @@ When a change needs calx or morphe to change as well, commit them in dependency 
    - compile-time C++ types beside them;
    - The relation to morphe's free abelian groups.
    - The relation to calx's typed IR annotations.
-2. **Sign and normalisation conventions** (§6).
+2. **Sign and normalisation conventions** (§6). The signature, curvature, SU(2), recoupling and lattice conventions are fixed in `docs/glossary.md` (decision 0005); those of Fourier transforms and spherical harmonics wait for `analysis`.
 3. **The first modules.** The infrastructure's first vertical slice needs:
    - `units`;
    - rotations in `geometry`;
    - spherical-harmonic potential theory in `gravitation`.
-4. **The scope of general relativity.** Post-Newtonian corrections for astronomy, or a general metric toolkit.
+4. **The scope of general relativity.** Answered by decision 0005: a general metric toolkit (`geometry`, `spacetime`); post-Newtonian dynamics and numerical relativity stay planned in `gravitation`.
 
 ## 9. Current State
 
-As of 2026-10-23, design documents exist; a provisional JavaScript stand-in for `discretisation` (the spectral transform on the sphere, and values on a longitude-latitude grid), with its tests ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)); and the first C++, `units` and `dynamics`, with 2 check programs and 14 checks ([ADR 0004](development/decisions/0004-the-continuum-units-and-dynamics.md)). The repository is published at `https://github.com/huangwanhong-maker/physis`.
+As of 2026-10-23, design documents exist; a provisional JavaScript stand-in for `discretisation` (the spectral transform on the sphere, and values on a longitude-latitude grid), with its tests ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)); the first C++, `units`, `dynamics` and `quantum` ([ADR 0004](development/decisions/0004-the-continuum-units-and-dynamics.md)); and the theoretical physics of [decision 0005](development/decisions/0005-symmetry-spacetime-fields-and-gauge.md) on morphe's complexes: `symmetry`, `geometry` (metrics, curvature, geodesics), `spacetime`, `field_theory`, `gauge` and `quantum_gravity`. In all, 12 check programs and 222 checks. The repository is published at `https://github.com/huangwanhong-maker/physis`.

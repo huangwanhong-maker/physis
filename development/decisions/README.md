@@ -13,6 +13,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0002](0002-scope-boundaries-and-dependencies.md) | Scope, boundaries and dependencies | Accepted |
 | [0003](0003-provisional-javascript-stand-in.md) | A provisional JavaScript stand-in | Accepted, provisionally |
 | [0004](0004-the-continuum-units-and-dynamics.md) | The continuum: new modules, and the first C++ in units and dynamics | Accepted, provisionally |
+| [0005](0005-symmetry-spacetime-fields-and-gauge.md) | Symmetry, spacetime, fields, gauge and quantum gravity | Accepted, provisionally |
 
 ## 2. Template
 

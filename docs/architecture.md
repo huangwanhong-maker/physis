@@ -40,7 +40,8 @@ Physical dimensions form the free abelian group ℤ⁷ over the seven SI base un
 | Module | Depends on (within physis) |
 |---|---|
 | `units` | — |
-| `geometry` | `units` |
+| `symmetry` | — (calx; morphe `arithmetic`) |
+| `geometry` | `units`, `symmetry` |
 | `computational_geometry` | `geometry` |
 | `analysis` | `units` |
 | `dynamics` | `units` |
@@ -48,8 +49,13 @@ Physical dimensions form the free abelian group ℤ⁷ over the seven SI base un
 | `quantum` | `geometry`, `dynamics` |
 | `statistical_mechanics` | `thermodynamics`, `dynamics`, `quantum` |
 | `discretisation` | `geometry`, `analysis`, `dynamics` |
+| `spacetime` | `geometry` (morphe `topology`) |
+| `field_theory` | `spacetime` (morphe `topology`, `combinatorics`) |
+| `gauge` | `field_theory`, `symmetry` (morphe `topology`, `algebra`) |
+| `quantum_gravity` | `gauge`, `spacetime` (morphe `topology`) |
+| `electromagnetism` | `geometry`, `discretisation`, `gauge` |
 | `mechanics` | `geometry`, `discretisation`, `dynamics` |
-| `gravitation` | `geometry`, `mechanics` |
+| `gravitation` | `geometry`, `mechanics`, `spacetime` |
 | `thermodynamics` | `units` |
 | `continuum` | `geometry`, `discretisation`, `thermodynamics` |
 | `chemistry` | `thermodynamics`, `continuum` |
