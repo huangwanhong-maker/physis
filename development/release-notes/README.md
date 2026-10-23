@@ -13,4 +13,4 @@ A running record, for readers, of what each commit made possible or better. It i
 
 | Date | Commits |
 |---|---|
-| [2026-10-23](2026-10-23.md) | Events counted once; the continuum: units and dynamics |
+| [2026-10-23](2026-10-23.md) | The open qubit; events counted once; the continuum: units and dynamics |

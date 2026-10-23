@@ -23,7 +23,7 @@ physis is one of the foundation libraries of [The Science Infrastructures](https
 | `analysis` | Real and complex analysis as computation needs it; function spaces, operators, spectral theory; Fourier and harmonic analysis on groups and spheres; integral transforms and equations; calculus of variations | planned |
 | [`dynamics`](dynamics/) | State spaces, vector fields and flows; linear systems and their exact propagators; hybrid systems (flow, guard, jump); discrete-time, delay and stochastic dynamics; stability, bifurcation, Lyapunov exponents, invariant measures | draft: linear propagators, hybrid systems |
 | `control` | Systems with inputs and outputs: controllability, observability, feedback, optimal and model-predictive control, system identification | planned |
-| `quantum` | Hilbert spaces, states and operators; spins and qubits; unitary and open (GKSL) dynamics, as Liouvillians or generalised Bloch vectors; quantum trajectories; measurement; mean-field closures | planned |
+| [`quantum`](quantum/) | Hilbert spaces, states and operators; spins and qubits; unitary and open (GKSL) dynamics, as Liouvillians or generalised Bloch vectors; quantum trajectories; measurement; mean-field closures | draft: the open two-level system and its trajectories |
 | `statistical_mechanics` | Ensembles and partition functions; lattice and spin models (Ising, Potts, Heisenberg, transverse-field); Glauber and Metropolis dynamics; mean-field theory and phase transitions | planned |
 | `discretisation` | Finite-difference, finite-volume, finite-element and spectral methods. Structure-preserving discretisation: discrete exterior calculus on morphe's complexes. Geometric and Lie-group integrators. | planned; a JavaScript stand-in for the spectral transform on the sphere and longitude-latitude grids is in [`js/`](js/) |
 | `mechanics` | Lagrangian and Hamiltonian mechanics; rigid-body rotation; two-body and n-body problems; perturbation theory | planned |
@@ -53,7 +53,7 @@ No library of the project depends on the infrastructure's domains or application
 
 ## 5. Status
 
-**Draft (2026-10-23).** The first C++ modules, `units` and `dynamics`, are written and checked, as the neuroscience domain's spiking networks need them ([ADR 0004](development/decisions/0004-the-continuum-units-and-dynamics.md)); a provisional JavaScript stand-in for `discretisation` is in [`js/`](js/) ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)). The rest is designed and planned; the place of each module in the whole of the project's mathematics is the infrastructure's [map of the mathematics](https://github.com/huangwanhong-maker/The-Science-Infrastructures/blob/main/docs/mathematics.md).
+**Draft (2026-10-23).** The first C++ modules, `units`, `dynamics` and `quantum` (the open two-level system), are written and checked, as the neuroscience domain's spiking networks need them ([ADR 0004](development/decisions/0004-the-continuum-units-and-dynamics.md)); a provisional JavaScript stand-in for `discretisation` is in [`js/`](js/) ([ADR 0003](development/decisions/0003-provisional-javascript-stand-in.md)). The rest is designed and planned; the place of each module in the whole of the project's mathematics is the infrastructure's [map of the mathematics](https://github.com/huangwanhong-maker/The-Science-Infrastructures/blob/main/docs/mathematics.md).
 
 Inside The Science Infrastructures, build and check with CMake 3.20 or later (calx is taken from `../calx`):
 

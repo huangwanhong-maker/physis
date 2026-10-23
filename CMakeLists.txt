@@ -33,3 +33,4 @@ endif()
 
 add_subdirectory(units)
 add_subdirectory(dynamics)
+add_subdirectory(quantum)

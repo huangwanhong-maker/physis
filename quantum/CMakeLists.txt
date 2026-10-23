@@ -1,0 +1,8 @@
+add_library(physis_quantum INTERFACE)
+add_library(physis::quantum ALIAS physis_quantum)
+target_include_directories(physis_quantum INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_quantum INTERFACE cxx_std_20)
+target_link_libraries(physis_quantum INTERFACE physis::dynamics)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_quantum SOURCES tests/check_quantum.cpp LIBRARIES physis::quantum calx::quadrature calx::random)
+endif()
