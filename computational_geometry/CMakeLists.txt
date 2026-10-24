@@ -1,0 +1,7 @@
+add_library(physis_computational_geometry INTERFACE)
+add_library(physis::computational_geometry ALIAS physis_computational_geometry)
+target_include_directories(physis_computational_geometry INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_computational_geometry INTERFACE cxx_std_20)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_sphere SOURCES tests/check_sphere.cpp LIBRARIES physis::computational_geometry calx::random)
+endif()

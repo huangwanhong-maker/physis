@@ -16,6 +16,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0005](0005-symmetry-spacetime-fields-and-gauge.md) | Symmetry, spacetime, fields, gauge and quantum gravity | Accepted, provisionally |
 | [0006](0006-the-generation-of-spacetime-by-field-theories.md) | The generation of spacetime by field theories | Accepted, provisionally |
 | [0007](0007-exact-z2-contraction-and-finite-heat-bath.md) | The exact contraction of ℤ₂ gauge theories, couplings by 2-cell, and the heat bath of finite groups | Accepted, provisionally |
+| [0008](0008-cochains-hodge-and-the-sphere.md) | Cochains and the Hodge decomposition; points on the sphere | Accepted, provisionally |
 
 ## 2. Template
 

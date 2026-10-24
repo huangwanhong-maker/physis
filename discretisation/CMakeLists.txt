@@ -1,0 +1,8 @@
+add_library(physis_discretisation INTERFACE)
+add_library(physis::discretisation ALIAS physis_discretisation)
+target_include_directories(physis_discretisation INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_discretisation INTERFACE cxx_std_20)
+target_link_libraries(physis_discretisation INTERFACE morphe::topology morphe::combinatorics morphe::algebra calx::linalg)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_cochains SOURCES tests/check_cochains.cpp LIBRARIES physis::discretisation calx::random)
+endif()
