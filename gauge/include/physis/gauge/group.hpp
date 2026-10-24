@@ -58,6 +58,12 @@ concept StapleGroup = GaugeGroup<G> && requires(const G& g, const typename G::El
   { g.re_trace_with(a, s) } -> std::convertible_to<double>;
 };
 
+// A finite group whose elements are 0, …, order() − 1: the heat bath enumerates them.
+template <class G>
+concept FiniteGaugeGroup = GaugeGroup<G> && std::same_as<typename G::Element, std::uint32_t> && requires(const G& g) {
+  { g.order() } -> std::convertible_to<std::size_t>;
+};
+
 constexpr double two_pi = 2 * std::numbers::pi;
 
 inline double angle_0_2pi(double t) {
@@ -163,6 +169,7 @@ struct FiniteGroupAdapter {
   }
   double class_angle(Element a) const { return two_pi * a / static_cast<double>(group->order()); }
   std::string name() const { return group->name; }
+  std::size_t order() const { return group->order(); }
 };
 
 }  // namespace physis::gauge

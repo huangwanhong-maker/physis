@@ -18,6 +18,13 @@
 //     heat bath with the quaternion projection q of the (i, j) block of U Σ, since
 //     Re tr(R U Σ) = 2 (r q)_0 + const and a = 2 β |q| / N.
 //   Edges where the action is not linear are updated by Metropolis.
+// - Heat bath of a finite group (ℤ_N, or any finite group by its table): U_e drawn among the |G|
+//   elements with probability ∝ e^{β Σ_{f ∋ e} w_f Re tr U_f / N}, each weight computed by setting
+//   the element in turn; exact for any complex (an edge met twice in a word included) and any
+//   couplings. It is also aperiodic, which Metropolis on ℤ₂ is not: its one proposal is the flip,
+//   so a link whose weight does not depend on it (in no 2-cell, or where its occurrences cancel)
+//   flips at every sweep, and a loop of n such links is multiplied by (−1)ⁿ at every sweep: the
+//   chain is periodic, and a loop of even length never changes.
 // - Overrelaxation (Adler 1981; Creutz 1987, Phys. Rev. D 36, 515), microcanonical: U ↦ the
 //   reflection that keeps Re tr(U Σ): for U(1), θ ↦ -θ - 2ψ; for SU(2), U ↦ V⁻¹ U⁻¹ V⁻¹. It
 //   is not ergodic alone and is mixed with heat-bath sweeps.
@@ -28,8 +35,10 @@
 #include <cmath>
 #include <complex>
 #include <cstddef>
+#include <limits>
 #include <numbers>
 #include <type_traits>
+#include <vector>
 
 #include "field.hpp"
 
@@ -64,7 +73,8 @@ SweepStatistics metropolis_link(GaugeField<G>& U, std::size_t e, double beta, St
 template <GaugeGroup G>
 SweepStatistics metropolis_sweep(GaugeField<G>& U, double beta, Stream& z, double eps = 0.5, int hits = 1) {
   SweepStatistics st;
-  for (std::size_t e = 0; e < U.links().size(); e++) st += metropolis_link(U, e, beta, z, eps, hits);
+  for (std::size_t e = 0; e < U.links().size(); e++)
+    if (!U.frozen(e)) st += metropolis_link(U, e, beta, z, eps, hits);
   return st;
 }
 
@@ -150,12 +160,15 @@ inline symmetry::SUN heat_bath_link(const SUNGroup& g, symmetry::SUN U, const sy
   return U.reunitarised();
 }
 
-// One heat-bath sweep; edges where the action is not linear are updated by Metropolis.
+// One heat-bath sweep; edges where the action is not linear, or whose 2-cells carry different
+// couplings, are updated by Metropolis; frozen links are left alone.
 template <StapleGroup G>
 SweepStatistics heat_bath_sweep(GaugeField<G>& U, double beta, Stream& z, double eps = 0.5) {
   SweepStatistics st;
   for (std::size_t e = 0; e < U.links().size(); e++) {
-    if (!U.linear(e)) {
+    if (U.frozen(e)) continue;
+    const double w = U.link_coupling(e);
+    if (!U.linear(e) || std::isnan(w)) {
       st += metropolis_link(U, e, beta, z, eps, 4);
       continue;
     }
@@ -164,8 +177,32 @@ SweepStatistics heat_bath_sweep(GaugeField<G>& U, double beta, Stream& z, double
       continue;
     }
     const auto sigma = U.staple(e);
-    if constexpr (std::is_same_v<G, SUNGroup>) U.set(e, heat_bath_link(U.group(), U.link(e), sigma, beta, z));
-    else U.set(e, heat_bath_link(U.group(), sigma, beta, z));
+    if constexpr (std::is_same_v<G, SUNGroup>) U.set(e, heat_bath_link(U.group(), U.link(e), sigma, beta * w, z));
+    else U.set(e, heat_bath_link(U.group(), sigma, beta * w, z));
+    st.proposed++, st.accepted++;
+  }
+  return st;
+}
+
+// One heat-bath sweep of a finite group; frozen links are left alone.
+template <FiniteGaugeGroup G>
+SweepStatistics heat_bath_sweep(GaugeField<G>& U, double beta, Stream& z, double = 0.5) {
+  SweepStatistics st;
+  const std::size_t n = U.group().order();
+  std::vector<double> w(n);
+  for (std::size_t e = 0; e < U.links().size(); e++) {
+    if (U.frozen(e)) continue;
+    double top = -std::numeric_limits<double>::infinity();
+    for (std::size_t g = 0; g < n; g++) {
+      U.set(e, static_cast<typename G::Element>(g));
+      w[g] = beta * U.local_plaquettes(e);
+      top = std::max(top, w[g]);
+    }
+    double total = 0;
+    for (double& x : w) total += x = std::exp(x - top);
+    std::size_t g = 0;
+    for (double y = z.uniform() * total; g + 1 < n && y >= w[g]; g++) y -= w[g];
+    U.set(e, static_cast<typename G::Element>(g));
     st.proposed++, st.accepted++;
   }
   return st;
@@ -189,7 +226,7 @@ void overrelaxation_sweep(GaugeField<G>& U)
   requires std::is_same_v<G, U1Group> || std::is_same_v<G, SU2Group>
 {
   for (std::size_t e = 0; e < U.links().size(); e++)
-    if (U.linear(e) && !U.occurrences(e).empty()) overrelaxation_link(U, e);
+    if (U.linear(e) && !U.frozen(e) && !U.occurrences(e).empty() && !std::isnan(U.link_coupling(e))) overrelaxation_link(U, e);
 }
 
 }  // namespace physis::gauge

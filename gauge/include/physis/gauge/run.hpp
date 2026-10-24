@@ -103,6 +103,8 @@ RunResult run(const CWComplex& X, G group, const RunOptions& o, const GroupSpec&
       stats += heat_bath_sweep(U, o.beta, z, o.step);
       if constexpr (std::is_same_v<G, U1Group> || std::is_same_v<G, SU2Group>)
         for (std::size_t k = 0; k < o.overrelax; k++) overrelaxation_sweep(U);
+    } else if constexpr (FiniteGaugeGroup<G>) {
+      stats += heat_bath_sweep(U, o.beta, z);
     } else {
       stats += metropolis_sweep(U, o.beta, z, o.step, o.hits);
     }

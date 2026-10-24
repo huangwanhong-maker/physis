@@ -13,4 +13,5 @@ A running record, for readers, of what each commit made possible or better. It i
 
 | Date | Commits |
 |---|---|
+| [2026-10-24](2026-10-24.md) | ℤ₂ gauge theories computed exactly; the heat bath of finite groups; invariants of SU(2) |
 | [2026-10-23](2026-10-23.md) | The generation of spacetime by field theories; symmetry, spacetime, fields and gauge; the open qubit; events counted once; the continuum: units and dynamics |

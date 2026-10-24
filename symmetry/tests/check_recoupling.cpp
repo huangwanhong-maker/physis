@@ -346,5 +346,32 @@ int main() {
               for (int f = 0; f <= 6; f++) lim = std::max(lim, std::fabs(ps::quantum_6j(20000, a, b, c, d, e, f) - ps::wigner_6j(a, b, c, d, e, f).value()));
     s.check("recoupling: quantum 6j symbols at r = 20000 against the classical ones, 2j <= 6 (error falls as 1/r^2)", lim, 1e-7);
   }
+
+  // Invariants of tensor products: Catalan numbers for spins ½, the triangle conditions for three
+  // spins, and for four the intermediate spins of a recoupling.
+  {
+    bool catalan = true;
+    morphe::arithmetic::Integer c(1);  // C_k
+    for (int n = 0; n <= 40; n += 2) {
+      const int k = n / 2;
+      if (k > 0) c = c * morphe::arithmetic::Integer(2 * (2 * k - 1)) / morphe::arithmetic::Integer(k + 1);
+      catalan = catalan && ps::invariant_dimension(std::vector<int>(static_cast<std::size_t>(n), 1)) == c &&
+                ps::invariant_dimension(std::vector<int>(static_cast<std::size_t>(n + 1), 1)).is_zero();
+    }
+    s.require("invariants: n spins ½ have the Catalan number C_{n/2} of them, n odd none (n <= 41)", catalan, "C_20 = " + c.str());
+    bool three = true, four = true;
+    for (int a = 0; a <= 8; a++)
+      for (int b = 0; b <= 8; b++)
+        for (int d = 0; d <= 8; d++) {
+          three = three && ps::invariant_dimension({a, b, d}) == morphe::arithmetic::Integer(ps::triangle(a, b, d) ? 1 : 0);
+          for (int e = 0; e <= 6; e++) {
+            long long channels = 0;
+            for (int x = 0; x <= 16; x++) channels += ps::triangle(a, b, x) && ps::triangle(x, d, e);
+            four = four && ps::invariant_dimension({a, b, d, e}) == morphe::arithmetic::Integer(channels);
+          }
+        }
+    s.require("invariants: three spins have one invariant exactly when they form a triad", three);
+    s.require("invariants: four spins have one invariant for each intermediate spin of a recoupling", four);
+  }
   return s.done();
 }

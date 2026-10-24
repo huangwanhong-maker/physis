@@ -35,6 +35,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <map>
 #include <cstdlib>
 #include <deque>
 #include <optional>
@@ -128,6 +129,24 @@ inline const Integer& factorial(int n) {
 // a + b + c even (so that j₁ + j₂ + j₃ is an integer).
 inline bool triangle(int a, int b, int c) {
   return a >= 0 && b >= 0 && c >= 0 && (a + b + c) % 2 == 0 && c >= std::abs(a - b) && c <= a + b;
+}
+
+// The dimension of the space of invariants Inv(V_{j₁} ⊗ … ⊗ V_{jₙ}) of SU(2), spins as two_j: the
+// multiplicity of spin 0 in the product, coupled one factor at a time by the Clebsch–Gordan series
+// V_a ⊗ V_b = ⊕_{c = |a−b|}^{a+b} V_c (Edmonds 1957, §3.2). It is the number of intertwiners at a
+// spin-network node of valence n; for n spins ½ it is the Catalan number C_{n/2}, and 0 for n odd
+// (Kauffman and Lins 1994, Temperley–Lieb Recoupling Theory, ch. 2). Exact, in morphe's integers.
+inline Integer invariant_dimension(const std::vector<int>& two_j) {
+  std::map<int, Integer> m{{0, Integer(1)}};  // two_J -> multiplicity
+  for (int a : two_j) {
+    if (a < 0) throw std::invalid_argument("physis::symmetry::invariant_dimension: a spin below 0");
+    std::map<int, Integer> next;
+    for (const auto& [b, k] : m)
+      for (int c = std::abs(a - b); c <= a + b; c += 2) next[c] = next[c] + k;
+    m.swap(next);
+  }
+  const auto it = m.find(0);
+  return it == m.end() ? Integer(0) : it->second;
 }
 
 // Δ(abc)² for a triad satisfying the triangle conditions.

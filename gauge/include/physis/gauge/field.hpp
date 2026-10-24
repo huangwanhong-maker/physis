@@ -23,10 +23,16 @@
 // linear in U_e, -β/N Re tr(U_e Σ_e), the form heat bath and overrelaxation need. When e
 // occurs twice in one word (the one-vertex torus a b a⁻¹ b⁻¹) it is not, and only
 // Metropolis, which recomputes the holonomies, applies; linear() says which.
+//
+// Couplings and frozen links. Each 2-cell may carry its own coupling w_f, the action becoming
+// β Σ_f w_f (1 - Re tr U_f / N), as on anisotropic lattices or where the 2-cells of a complex stand
+// for different interactions (default 1). A link may be frozen at a value: a gauge fixing, a
+// boundary condition or an observation; the updates leave it alone.
 
 #pragma once
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <stdexcept>
 #include <utility>
@@ -52,6 +58,8 @@ class GaugeField {
     occurrences_.resize(X.edges.size());
     faces_of_.resize(X.edges.size());
     linear_.assign(X.edges.size(), 1);
+    frozen_.assign(X.edges.size(), 0);
+    coupling_.assign(X.faces.size(), 1.0);
     for (std::size_t f = 0; f < X.faces.size(); f++) {
       for (std::size_t i = 0; i < X.faces[f].boundary.size(); i++) {
         const std::size_t e = X.faces[f].boundary[i].edge;
@@ -75,6 +83,29 @@ class GaugeField {
   }
   // Whether the action is linear in U_e (e occurs at most once in each word).
   bool linear(std::size_t e) const { return linear_[e]; }
+  // The coupling of each 2-cell, w_f (default 1).
+  void set_couplings(std::vector<double> w) {
+    if (w.size() != X_->faces.size()) throw std::invalid_argument("physis::gauge::GaugeField::set_couplings: one coupling per 2-cell");
+    coupling_ = std::move(w);
+  }
+  double coupling(std::size_t f) const { return coupling_[f]; }
+  // The coupling shared by every 2-cell containing e, or NaN if they differ: where it is shared,
+  // the local action is β w Re tr(U_e Σ_e) and the heat bath applies at β w.
+  double link_coupling(std::size_t e) const {
+    if (faces_of_[e].empty()) return 1;
+    const double w = coupling_[faces_of_[e].front()];
+    for (std::size_t f : faces_of_[e])
+      if (coupling_[f] != w) return std::nan("");
+    return w;
+  }
+  // Frozen links: fixed at a value, left alone by the updates.
+  void freeze(std::size_t e, Element u) {
+    links_[e] = std::move(u);
+    frozen_[e] = 1;
+  }
+  void thaw(std::size_t e) { frozen_[e] = 0; }
+  bool frozen(std::size_t e) const { return frozen_[e]; }
+
   // The 2-cells whose words contain e (each once), and every occurrence (face, position).
   const std::vector<std::size_t>& faces_of(std::size_t e) const { return faces_of_[e]; }
   const std::vector<std::pair<std::size_t, std::size_t>>& occurrences(std::size_t e) const { return occurrences_[e]; }
@@ -95,10 +126,10 @@ class GaugeField {
     for (std::size_t f = 0; f < X_->faces.size(); f++) s += plaquette(f);
     return s / static_cast<double>(X_->faces.size());
   }
-  // The Wilson action β Σ_f (1 - Re tr U_f / N).
+  // The Wilson action β Σ_f w_f (1 - Re tr U_f / N).
   double action(double beta) const {
     double s = 0;
-    for (std::size_t f = 0; f < X_->faces.size(); f++) s += 1 - plaquette(f);
+    for (std::size_t f = 0; f < X_->faces.size(); f++) s += coupling_[f] * (1 - plaquette(f));
     return beta * s;
   }
   // Re tr / N of the transport around a closed path: a Wilson (or Polyakov) loop.
@@ -111,11 +142,11 @@ class GaugeField {
       links_[e] = group_.mul(group_.mul(g[X_->edges[e][0]], links_[e]), group_.inv(g[X_->edges[e][1]]));
   }
 
-  // Σ_{f ∋ e} Re tr U_f / N over the distinct 2-cells containing e: the part of -S/β that
+  // Σ_{f ∋ e} w_f Re tr U_f / N over the distinct 2-cells containing e: the part of -S/β that
   // depends on U_e.
   double local_plaquettes(std::size_t e) const {
     double s = 0;
-    for (std::size_t f : faces_of_[e]) s += plaquette(f);
+    for (std::size_t f : faces_of_[e]) s += coupling_[f] * plaquette(f);
     return s;
   }
 
@@ -143,6 +174,8 @@ class GaugeField {
   std::vector<std::vector<std::pair<std::size_t, std::size_t>>> occurrences_;
   std::vector<std::vector<std::size_t>> faces_of_;
   std::vector<char> linear_;
+  std::vector<char> frozen_;
+  std::vector<double> coupling_;
 };
 
 }  // namespace physis::gauge

@@ -170,6 +170,12 @@ int main() {
     r = pg::run(mt::torus_lattice({3, 3}), {"Z", 3}, o);
     s.check("gauge: Z3 on the 3 × 3 torus at β = 1, Metropolis, against the character formula (errors)", deviation(r, *r.exact_plaquette), 4.0, "σ");
     s.require("gauge: ... with an acceptance between 0.1 and 0.9", r.acceptance > 0.1 && r.acceptance < 0.9, std::to_string(r.acceptance));
+    o.update = "heatbath";
+    r = pg::run(mt::torus_lattice({3, 3}), {"Z", 3}, o);
+    s.check("gauge: Z3 on the 3 × 3 torus at β = 1, the heat bath of a finite group, against the character formula (errors)", deviation(r, *r.exact_plaquette), 4.0, "σ");
+    o.beta = 0.8;
+    r = pg::run(mt::torus_lattice({4, 4}), {"Z", 2}, o);
+    s.check("gauge: Z2 on the 4 × 4 torus at β = 0.8, heat bath, against Migdal–Witten (errors)", deviation(r, *r.exact_plaquette), 4.0, "σ");
   }
   // ---- discs: plaquettes and the area law ------------------------------------------------------------------------------------
   {
