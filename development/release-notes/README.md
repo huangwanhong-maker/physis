@@ -13,7 +13,7 @@ A running record, for readers, of what each commit made possible or better. It i
 
 | Date | Commits |
 |---|---|
-| [2026-10-29](2026-10-29.md) | Potential fields outside a sphere, their spectra, and random fields |
+| [2026-10-29](2026-10-29.md) | Point groups, field theories on finite groups, and reaction kinetics; potential fields outside a sphere, their spectra, and random fields |
 | [2026-10-28](2026-10-28.md) | Rotations, moving frames and their holonomy; the two-body problem |
 | [2026-10-24](2026-10-24.md) | Cochains, the Hodge decomposition and the sphere; ℤ₂ gauge theories computed exactly; the heat bath of finite groups; invariants of SU(2) |
 | [2026-10-23](2026-10-23.md) | The generation of spacetime by field theories; symmetry, spacetime, fields and gauge; the open qubit; events counted once; the continuum: units and dynamics |

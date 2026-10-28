@@ -19,6 +19,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0008](0008-cochains-hodge-and-the-sphere.md) | Cochains and the Hodge decomposition; points on the sphere | Accepted, provisionally |
 | [0009](0009-rotations-frames-and-the-two-body-problem.md) | Rotations, moving frames and their holonomy; the two-body problem | Accepted, provisionally |
 | [0010](0010-potential-fields.md) | Potential fields outside a sphere, their spectra, and random fields with a given spectrum | Accepted, provisionally |
+| [0011](0011-point-groups-stranded-fields-and-reaction-kinetics.md) | Point groups, stranded field theories on finite groups, and reaction kinetics | Accepted, provisionally |
 
 ## 2. Template
 

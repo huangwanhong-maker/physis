@@ -1,0 +1,8 @@
+add_library(physis_chemistry INTERFACE)
+add_library(physis::chemistry ALIAS physis_chemistry)
+target_include_directories(physis_chemistry INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_chemistry INTERFACE cxx_std_20)
+target_link_libraries(physis_chemistry INTERFACE morphe::algebra morphe::arithmetic calx::random)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_kinetics SOURCES tests/check_kinetics.cpp LIBRARIES physis::chemistry calx::integrators)
+endif()
