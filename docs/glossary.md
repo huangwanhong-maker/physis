@@ -28,7 +28,9 @@
 | Invariant field theories (decision 0006) | complex fields φ of rank r, Gaussian measure with ⟨φ_a φ̄_b⟩ = δ_ab; an interaction is the trace invariant I_B of its bubble, entering as e^{−λ_B I_B}; a Feynman graph's N-power is its number of faces of colours (0, i), colour 0 the propagators | `field_theory`, `quantum_gravity` |
 | Bubbles | bipartite r-coloured graphs, black vertices φ, white vertices φ̄, colour i contracting the i-th indices | morphe `bubbles.hpp` |
 | Condensate cosmology | Planck units, ħ = c = 1 with G a parameter; time is relational, the value of a massless scalar field φ | `quantum_gravity` |
-| Fourier transform, spherical harmonics | to be fixed with `analysis` and `discretisation` | — |
+| Spherical harmonics (decision 0010) | Schmidt's semi-normalised associated Legendre functions without the Condon–Shortley phase, P̆ₙᵐ (calx `special_functions`); fully normalised P̄ₙᵐ = √(2n + 1) P̆ₙᵐ for gravity; ψ the planetocentric latitude, λ the east longitude | `analysis` |
+| Internal potential | V = a Σₙ (a/r)ⁿ⁺¹ Σₘ (gₙᵐ cos mλ + hₙᵐ sin mλ) P̆ₙᵐ(sin ψ), B = −∇V; components north X, east Y, down Z; gₙᵐ, hₙᵐ in the field's unit | `analysis` |
+| Fourier transform | to be fixed with the transforms of `analysis` and `discretisation` | — |
 
 ## 2. Notation
 
@@ -38,6 +40,10 @@
 | Γ^a_{bc}, R^a_{bcd}, R_{ab}, R, G_{ab}, C_{abcd} | Christoffel symbols, Riemann, Ricci, scalar, Einstein, Weyl | m⁻¹, m⁻² | `christoffel`, `curvature` |
 | K = R_{abcd} R^{abcd} | Kretschmann scalar | m⁻⁴ | `kretschmann` |
 | M, Q, a, ℓ | gravitational length, charge length, spin length, curvature radius | m | `spacetime` models |
+| gₙᵐ, hₙᵐ, a | Gauss coefficients of an internal potential, its reference radius | the field's unit; m | `HarmonicPotential` |
+| X, Y, Z | north, east, down components of a potential field | the field's unit | `FieldValue::north`, `east`, `down` |
+| Rₙ(r) | Lowes–Mauersberger spectrum, the power of degree n at radius r | the field's unit squared | `lowes_spectrum` |
+| A nᵝ ρ²ⁿ, (1 − ρ) a | a spectral law and its effective depth | the field's unit squared; m | `SpectralLaw`, `SpectralLaw::depth` |
 | ε_h, θ | deficit angle at a hinge, dihedral angle | rad | `regge.hpp` |
 | j, two_j, m | spin, twice the spin, magnetic number | — | `recoupling.hpp` |
 | {j₁ j₂ j₃; j₄ j₅ j₆} | 6j symbol | — | `wigner_6j`, `quantum_6j` |

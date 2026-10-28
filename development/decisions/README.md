@@ -18,6 +18,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0007](0007-exact-z2-contraction-and-finite-heat-bath.md) | The exact contraction of ℤ₂ gauge theories, couplings by 2-cell, and the heat bath of finite groups | Accepted, provisionally |
 | [0008](0008-cochains-hodge-and-the-sphere.md) | Cochains and the Hodge decomposition; points on the sphere | Accepted, provisionally |
 | [0009](0009-rotations-frames-and-the-two-body-problem.md) | Rotations, moving frames and their holonomy; the two-body problem | Accepted, provisionally |
+| [0010](0010-potential-fields.md) | Potential fields outside a sphere, their spectra, and random fields with a given spectrum | Accepted, provisionally |
 
 ## 2. Template
 

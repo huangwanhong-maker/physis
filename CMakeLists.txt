@@ -41,6 +41,7 @@ endif()
 
 # The modules in their order (decision 0005, §2.2).
 add_subdirectory(units)
+add_subdirectory(analysis)
 add_subdirectory(dynamics)
 add_subdirectory(quantum)
 add_subdirectory(symmetry)
