@@ -1,6 +1,6 @@
 # discretisation: Structure-Preserving Discretisation
 
-*Status: draft (2026-10-24): discrete exterior calculus on morphe's CW complexes, with real cochains, their coboundaries, potentials and the Hodge decomposition ([decision 0008](../development/decisions/0008-cochains-hodge-and-the-sphere.md)).* Finite differences, finite volumes, finite elements, spectral methods in C++, and geometric and Lie-group integrators are planned. A JavaScript stand-in for the spectral transform on the sphere and for longitude–latitude grids is in [`js/`](../js/) ([decision 0003](../development/decisions/0003-provisional-javascript-stand-in.md)).
+*Status: draft (2026-10-29): discrete exterior calculus on morphe's CW complexes, with real cochains, their coboundaries, potentials and the Hodge decomposition ([decision 0008](../development/decisions/0008-cochains-hodge-and-the-sphere.md)); complexes realised in space, boxes, and cochains on boxes as fields ([decision 0012](../development/decisions/0012-fields-as-sections.md), its [theory](../docs/theory/fields.md) §9).* Finite differences, finite volumes, finite elements, spectral methods in C++, and geometric and Lie-group integrators are planned. A JavaScript stand-in for the spectral transform on the sphere and for longitude–latitude grids is in [`js/`](../js/) ([decision 0003](../development/decisions/0003-provisional-javascript-stand-in.md)).
 
 ## 1. Purpose
 
@@ -13,6 +13,8 @@ Discretisations that keep the structure of the continuous problem: d∘d = 0, St
 - **The Hodge decomposition.** With diagonal Hodge stars (weights on edges and 2-cells), a 1-cochain splits orthogonally into d₀α (exact: a potential's gradient), δ₁γ (co-exact: curl round the 2-cells) and h (harmonic: closed and co-closed, carrying the integrals round the cycles no 2-cell fills, of dimension b₁) (Eckmann 1944; Lim 2020).
   - The dense method solves the two normal equations by calx's solve, made definite by bases of their kernels: the components, and the 2-cycles of the subcomplex of the 2-cells and their edges (morphe).
   - The sparse method, beyond 1500 vertices or 2-cells, uses calx's conjugate gradients on the singular, consistent systems.
+- **Complexes realised in space.** The topology is morphe's; the geometry, a position for each vertex, is additional data, and the two are checked against each other. The coboundary in every degree is the transpose of the cellular boundary. The measures of the cells are lengths, vector areas, signed volumes by the divergence theorem, and centroids. In a complex of dimension n embedded in n dimensions, each facet has a conormal, and the incidences agree with the geometry: $d(i,f)=o_i\sigma(i,f)$.
+- **Boxes and their cochains.** A box is a product of cut intervals (morphe `product`); a point is located by a binary search along each axis, and a box refined by $r$ nests in the coarse one. A cochain on a box is a field. It pairs with chains, and has a value at a point in degree 0 (Whitney's multilinear interpolation) and in degree $n$ (a density). Its transfer to a refinement, the de Rham map of the Whitney interpolant, commutes with $d$ and keeps the total of a top cochain.
 - **Flows with conductances.** A flow is a 1-chain. With a conductance c_e > 0 on each edge (Ohm's law), its drop F / c is a cochain, decomposed with W₁ = c; multiplied back by c, the three parts are flows, orthogonal in the energy Σ F² / c. The driven flow c d₀α carries the whole boundary and the other two none (Kirchhoff's current law, Kirchhoff 1847); the local flow is the same amount round every edge of a 2-cell. The pairing Σ F ω of a flow with a cochain splits into the pairings of like parts.
 
 ## 3. Content
@@ -20,6 +22,8 @@ Discretisations that keep the structure of the continuous problem: d∘d = 0, St
 | Header | Content |
 |---|---|
 | `cochains.hpp` | `Cochain`; `d0`, `d1`, `d0_transpose`, `d1_transpose`; `integral(ω, path)`; `potential(X, ω)` → `Potential{phi, chords, defect, in_tree}`; `components(X)` |
+| `geometric.hpp` | `Coboundary` and `coboundary(X, k)` in every degree; `GeometricComplex`, `Measures` and `measure()` (lengths, vector areas, signed volumes, centroids); `Facets` and `facets()` (conormals, the cells behind and ahead, the boundary); `BoxComplex` (cells with their axes and least vertex; `find`, `locate`, `index`), `box_complex`, `uniform_box`, `refine` |
+| `cochain_field.hpp` | `CochainField` (a cochain on a box as a field: `pair` with chains, `coboundary`, evaluation in degrees 0 and $n$), `transfer(coarse, fine, k, c)` |
 | `hodge.hpp` | `Weights{edge, face}`, `HodgeOptions{method, dense_limit, tolerance}`; `hodge_decomposition(X, ω, W, options)` and `hodge_decompositions` (many at once) → `HodgeDecomposition{exact, coexact, harmonic, potential, curl, norms, sparse, iterations, residual}`; `harmonic_basis(X, W)`; `inner1`; `flow_decomposition(X, F, conductance, face_weights, options)` → `FlowDecomposition{driven, local, global, potential, circulation, energies, drop}` |
 
 ## 4. Checks
@@ -34,11 +38,17 @@ Discretisations that keep the structure of the continuous problem: d∘d = 0, St
   - the harmonic dimension equal to b₁(X; ℝ);
   - a flow with random conductances: its driven part carrying its whole boundary and the circulating parts none, the energies adding up, its pairing with a cochain splitting into like parts.
 - **A 60 × 60 lattice torus** decomposed by the sparse method.
+
+`tests/check_geometric.cpp` (18 checks):
+
+- **Boxes of one, two and three dimensions:** $dd=0$ in every degree; the measures of their cells; the facets, 40 on the boundary and 28 inside a box of 4 × 2 × 2 cubes; the orientation identity on every facet.
+- **Cochain fields:** the pairing with chains, Whitney's interpolation of an affine 0-cochain exact, a density constant in its cell, a refusal in other degrees.
+- **The transfer** to a refinement commuting with $d$ in every degree, and keeping a top cochain's total.
 - **Closed forms:** a circle's chord carrying its integral; the weighted cycle's harmonic part c/w_e; a triangle's integral ln 0.6, harmonic while unfilled and curvature once filled; Ohm's law on two parallel conductances.
 
 ## 5. Dependencies
 
-morphe `topology` (CW complexes, homology with generators), `combinatorics` (spanning forests), `algebra`; calx `linalg` (dense solve, CSR, conjugate gradients). In the checks, calx `random` and `verification`.
+morphe `topology` (CW complexes, homology with generators, products), `combinatorics` (spanning forests), `algebra`; physis `geometry` (vectors) and `fields` (cochain fields); calx `linalg` (dense solve, CSR, conjugate gradients). In the checks, calx `random` and `verification`.
 
 ## 6. References
 

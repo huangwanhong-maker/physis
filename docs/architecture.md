@@ -44,11 +44,12 @@ Physical dimensions form the free abelian group ℤ⁷ over the seven SI base un
 | `geometry` | `units`, `symmetry` |
 | `computational_geometry` | `geometry` |
 | `analysis` | `units` |
+| `fields` | `units`, `geometry`, `analysis` |
 | `dynamics` | `units` |
 | `control` | `dynamics` |
 | `quantum` | `geometry`, `dynamics` |
 | `statistical_mechanics` | `thermodynamics`, `dynamics`, `quantum` |
-| `discretisation` | `geometry`, `analysis`, `dynamics` |
+| `discretisation` | `geometry`, `analysis`, `dynamics`, `fields` |
 | `spacetime` | `geometry` (morphe `topology`) |
 | `field_theory` | `spacetime` (morphe `topology`, `combinatorics`) |
 | `gauge` | `field_theory`, `symmetry` (morphe `topology`, `algebra`) |
@@ -57,7 +58,7 @@ Physical dimensions form the free abelian group ℤ⁷ over the seven SI base un
 | `mechanics` | `geometry`, `discretisation`, `dynamics` |
 | `gravitation` | `geometry`, `mechanics`, `spacetime` |
 | `thermodynamics` | `units` |
-| `continuum` | `geometry`, `discretisation`, `thermodynamics` |
+| `continuum` | `geometry`, `discretisation`, `fields`, `thermodynamics` |
 | `chemistry` | `thermodynamics`, `continuum` |
 | `radiation` | `geometry`, `thermodynamics` |
 

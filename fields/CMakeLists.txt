@@ -1,0 +1,8 @@
+add_library(physis_fields INTERFACE)
+add_library(physis::fields ALIAS physis_fields)
+target_include_directories(physis_fields INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_fields INTERFACE cxx_std_20)
+target_link_libraries(physis_fields INTERFACE physis::units physis::geometry physis::analysis calx::differentiation)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_fields SOURCES tests/check_fields.cpp LIBRARIES physis::fields calx::random)
+endif()

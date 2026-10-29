@@ -30,6 +30,11 @@
 | Condensate cosmology | Planck units, ħ = c = 1 with G a parameter; time is relational, the value of a massless scalar field φ | `quantum_gravity` |
 | Spherical harmonics (decision 0010) | Schmidt's semi-normalised associated Legendre functions without the Condon–Shortley phase, P̆ₙᵐ (calx `special_functions`); fully normalised P̄ₙᵐ = √(2n + 1) P̆ₙᵐ for gravity; ψ the planetocentric latitude, λ the east longitude | `analysis` |
 | Internal potential | V = a Σₙ (a/r)ⁿ⁺¹ Σₘ (gₙᵐ cos mλ + hₙᵐ sin mλ) P̆ₙᵐ(sin ψ), B = −∇V; components north X, east Y, down Z; gₙᵐ, hₙᵐ in the field's unit | `analysis` |
+| Fields (decision 0012) | a query (t, x) in the field's time and on its frame's axes (m); an answer is valid (with an optional note) or refused as outside, missing or invalid, with a reason, never a zero; vectors on the frame's axes unless the fibre names a basis | `fields` |
+| Provenance | in the order of derivation physical, archive, model, assimilated, synthetic; a composite takes the most derived of its parts' (`most_derived`) | `fields` |
+| Samplings | a sphere's row i at latitude 90° − (i + ½)·180°/n_lat from the north, column j at −180° + (j + ½)·360°/n_lon, index i·n_lon + j; a plane's index i + n_u j; a volume's i + n₀(j + n₁k), the first axis fastest, its axes the rows of a matrix | `fields` |
+| Orientation of facets | a facet's conormal ν_f is that of its own orientation (a 2-cell's normal by the right-hand rule round its attaching word); σ(i, f) = +1 when ν_f points out of the top cell i; the incidences satisfy d(i, f) = o_i σ(i, f) | `discretisation` |
+| Fluxes of a balance law | J_f through a facet along its conormal, from the cell behind it to the cell ahead; a cell's energy changes by −h Σ_f σ(i, f) J_f | `continuum` |
 | Fourier transform | to be fixed with the transforms of `analysis` and `discretisation` | — |
 
 ## 2. Notation
@@ -60,3 +65,21 @@
 | E, H, M | eccentric, hyperbolic and mean anomalies | rad | `eccentric_anomaly`, `hyperbolic_anomaly`, `mean_anomaly` |
 | χ, ψ, c₂, c₃ | universal anomaly, χ²/a, Stumpff functions | m^½, —, — | `propagate`, `stumpff` |
 | μ | the attracting body's gravitational parameter GM | m³ s⁻² | passed by the caller |
+| φ ∈ Γ(E), B | a field, a section of a bundle E over its base B | the fibre's | `fields::Descriptor`, `AnyField` |
+| ρ | a reduction of the fibre | — | `Magnitude`, `Component`, `Radial`, `Horizontal`, `OnAxes` |
+| J, ∇·v, ∇×v | a vector field's Jacobian, its divergence and curl | per m | `Derivative`, `divergence`, `curl` |
+| R(z) | a one-step method's stability function on a mode of eigenvalue λ, z = hλ (RK4: Σ_{k≤4} z^k/k!; θ-method: (1 − (1 − θ)z)/(1 + θz)) | — | `integral_curve`; calx `theta_factor` |
+| o_i, σ(i, f), ν_f | a top cell's orientation, the side of a facet's conormal, the conormal | — | `Measures`, `Facets` |
+| T = R′ ∘ W | the transfer of cochains to a refinement, the de Rham map of the Whitney interpolant | — | `transfer` |
+| u, J, s, G_f, C_i, L | energy per cell, heat through a facet, sources, a facet's conductance, a cell's heat capacity, the conductance Laplacian d G dᵀ | J, W, W, W/K, J/K, W/K | `HeatConduction` |
+| θ | the weight of the new state in a θ-step | — | calx `theta_step` |
+| L(t, q, v), L_d(t, q_k, q_{k+1}) | a Lagrangian; its discrete Lagrangian over a step h (midpoint or trapezoid) | J; J s | `DiscreteLagrangian` |
+| D₁L_d, D₂L_d, D₁₂L_d | the discrete Lagrangian's derivatives in its first and second places, and its mixed block | J s m⁻¹; J s m⁻² | `DiscreteLagrangian::derivatives` (`d1`, `d2`, `d12`) |
+| p_k, f_d^± | a discrete momentum (the discrete Legendre transform); the discrete forces of Lagrange–d'Alembert | kg m/s; kg m/s | `PhaseState::p`, `VariationalIntegrator` |
+| J(q, p) = ⟨p, ξ_Q(q)⟩ | the momentum map of a symmetry with generator ξ_Q | the momentum's | `momentum_map` |
+| S_E | the Euclidean action of a closed path | J s | `euclidean_action` |
+| m, c, J | a body's mass, centre of mass and inertia about it (body axes) | kg, m, kg m² | `MassProperties` |
+| R, Π, Ω = J⁻¹Π | attitude (body → space), angular momentum and angular velocity in body axes | —, kg m²/s, s⁻¹ | `RigidBodyState::R, Pi`, `angular_velocity` |
+| J_d = ½ tr(J) I − J, F_k = R_kᵀ R_{k+1}, f | the nonstandard inertia; a step's relative rotation; its Cayley parameter, F = (I − f^)⁻¹(I + f^) | kg m², —, — | `RigidBodyIntegrator::cayley_step` |
+| f, M | a wrench: force (space) and moment about the centre (body axes) | N, N m | `Wrench`, `potential_wrench` |
+| K(x, y) = Cov(V(x), V(y)), Cov(B(x), B(y)) | the covariance of a random potential field's potential and field at two points | the coefficients' unit² (× m² for V) | `PotentialCovariance`, `TabulatedCovariance` |

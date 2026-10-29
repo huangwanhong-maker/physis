@@ -1,6 +1,6 @@
 # analysis
 
-*Status: draft.* Harmonic analysis as computation needs it. Its first part is potential fields outside a sphere: internal expansions in spherical harmonics, evaluated at points and on grids, their spectra, and random fields with a given spectrum ([decision 0010](../development/decisions/0010-potential-fields.md)).
+*Status: draft.* Harmonic analysis as computation needs it. Its first part is potential fields outside a sphere: internal expansions in spherical harmonics, evaluated at points and on grids, their spectra, and random fields with a given spectrum ([decision 0010](../development/decisions/0010-potential-fields.md)); and the covariance of such a random field between any two points, the law of a field known in part ([decision 0013](../development/decisions/0013-discrete-mechanics-and-the-law-of-a-field-known-in-part.md)).
 
 ## 1. Concepts
 
@@ -12,11 +12,14 @@ with $\psi$ the planetocentric latitude, $\lambda$ the east longitude, and $\bre
 
 An isotropic Gaussian field has independent coefficients of variance $\sigma_n^2$, and its expected spectrum is $(n+1)(2n+1)\sigma_n^2$. A crustal field's spectrum is close to $A\,n^\beta\rho^{2n}$: the statistics of its sources, attenuated over their depth $(1-\rho)a$. An estimate from data is a conditional mean, so the part it leaves unresolved has the law's power less its own.
 
+The law at two points is the covariance $\operatorname{Cov}(V(x),V(y)) = a^2\sum_n\sigma_n^2\rho^{n+1}P_n(\hat x\cdot\hat y)$, $\rho = a^2/(|x||y|)$, by Schmidt's addition theorem. That of $B$ is its mixed Hessian, by the chain rule over five sums of $P_n$, $P_n'$ and $P_n''$. A mission that conditions the field on a magnetometer's readings (tyche `spatial`) needs it at every pair of points.
+
 ## 2. Contents
 
 | Header | Content |
 |---|---|
 | `potential_field.hpp` | `HarmonicPotential` (degree, radius, $g$, $h$; truncation, sums); `read_shtools` (SHTOOLS's text format with its header); `field_at` (the potential and $X$, $Y$, $Z$ at a point); `field_grid` (on a grid of latitudes and longitudes, by rows: $O(LN^2)+O(LMN)$); `lowes_spectrum` |
+| `covariance.hpp` | `PotentialCovariance` (the covariance of $V$ and of $B$ at two points, from a spectrum; the five sums, their assembly by the chain rule), `TabulatedCovariance` (at one radius, the sums tabulated in the angle and read by Lagrange's cubic) |
 | `random_field.hpp` | `SpectralLaw` and `fit_spectral_law` (log-linear least squares on a band of degrees; its depth); `random_potential` (an isotropic Gaussian field of a given spectrum from a counter-based stream); `unresolved_spectrum` and `unresolved_part` (the power an estimate leaves to the law, and a realisation of it) |
 
 ## 3. Accuracy
@@ -36,6 +39,11 @@ The checks (`tests/check_analysis.cpp`) are:
 - the unresolved part.
 
 The fixtures are made by `tests/make_fixtures.py` from a closed formula for the coefficients, so that no file of coefficients is kept.
+
+`tests/check_covariance.cpp` (6 checks):
+- the covariances of $V$ and of $B$ at five pairs of points (near, one point, far, a pole, antipodes) against the sum over the coefficients, $\sum_k\sigma_k^2 b_k(x)b_k(y)^{\mathsf T}$, each $b_k$ by `field_at`, to rounding;
+- at degree 720, the variance at the sphere is $\sum_n E[R_n]$, and the field's covariance is the mixed second difference of the potential's;
+- the table against the exact sums from a metre to 16 km, to $4\times10^{-12}$ of the variance, and its fallback to the exact sums.
 
 ## 4. Dependencies
 

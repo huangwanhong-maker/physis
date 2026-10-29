@@ -6,4 +6,5 @@ target_link_libraries(physis_analysis INTERFACE calx::special_functions calx::li
 if(PHYSIS_CHECKS)
   calx_add_check(check_physis_analysis SOURCES tests/check_analysis.cpp LIBRARIES physis::analysis)
   target_compile_definitions(check_physis_analysis PRIVATE PHYSIS_ANALYSIS_FIXTURES="${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures")
+  calx_add_check(check_physis_covariance SOURCES tests/check_covariance.cpp LIBRARIES physis::analysis)
 endif()

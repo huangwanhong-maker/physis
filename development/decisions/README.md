@@ -20,6 +20,8 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0009](0009-rotations-frames-and-the-two-body-problem.md) | Rotations, moving frames and their holonomy; the two-body problem | Accepted, provisionally |
 | [0010](0010-potential-fields.md) | Potential fields outside a sphere, their spectra, and random fields with a given spectrum | Accepted, provisionally |
 | [0011](0011-point-groups-stranded-fields-and-reaction-kinetics.md) | Point groups, stranded field theories on finite groups, and reaction kinetics | Accepted, provisionally |
+| [0012](0012-fields-as-sections.md) | Fields as sections, geometric complexes, and the first balance law | Accepted, provisionally |
+| [0013](0013-discrete-mechanics-and-the-law-of-a-field-known-in-part.md) | Discrete mechanics, rigid bodies, and the covariance of a random potential field | Accepted, provisionally |
 
 ## 2. Template
 

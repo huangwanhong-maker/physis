@@ -1,0 +1,8 @@
+add_library(physis_continuum INTERFACE)
+add_library(physis::continuum ALIAS physis_continuum)
+target_include_directories(physis_continuum INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(physis_continuum INTERFACE cxx_std_20)
+target_link_libraries(physis_continuum INTERFACE physis::discretisation calx::integrators calx::linalg)
+if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_heat SOURCES tests/check_heat.cpp LIBRARIES physis::continuum physis::fields calx::random)
+endif()
