@@ -13,6 +13,7 @@ A running record, for readers, of what each commit made possible or better. It i
 
 | Date | Commits |
 |---|---|
+| [2026-10-30](2026-10-30.md) | Contributors, their terms, and a steward |
 | [2026-10-29](2026-10-29.md) | Fields as sections and their first balance law; motion from a discrete action, rigid bodies, and the law of a field known in part; point groups, field theories on finite groups, and reaction kinetics; potential fields outside a sphere, their spectra, and random fields |
 | [2026-10-28](2026-10-28.md) | Rotations, moving frames and their holonomy; the two-body problem |
 | [2026-10-24](2026-10-24.md) | Cochains, the Hodge decomposition and the sphere; ℤ₂ gauge theories computed exactly; the heat bath of finite groups; invariants of SU(2) |
