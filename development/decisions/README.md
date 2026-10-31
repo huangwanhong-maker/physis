@@ -24,6 +24,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0013](0013-discrete-mechanics-and-the-law-of-a-field-known-in-part.md) | Discrete mechanics, rigid bodies, and the covariance of a random potential field | Accepted, provisionally |
 | [0014](0014-articulated-bodies-in-the-plane-and-compliant-contact.md) | Articulated bodies in the plane, and compliant contact | Accepted, provisionally |
 | [0015](0015-stationary-random-fields.md) | Stationary random fields read at any point | Accepted, provisionally |
+| [0016](0016-kinematic-waves-master-equations-and-reaction-diffusion.md) | Kinematic waves, master equations, and reaction–diffusion on graphs | Accepted, provisionally |
 | [0017](0017-bodies-in-a-fluid-and-lagrangian-dynamics.md) | Bodies in a fluid, and the Euler–Lagrange equations solved for the acceleration | Accepted, provisionally |
 
 ## 2. Template

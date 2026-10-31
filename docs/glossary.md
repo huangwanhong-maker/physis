@@ -35,6 +35,9 @@
 | Samplings | a sphere's row i at latitude 90° − (i + ½)·180°/n_lat from the north, column j at −180° + (j + ½)·360°/n_lon, index i·n_lon + j; a plane's index i + n_u j; a volume's i + n₀(j + n₁k), the first axis fastest, its axes the rows of a matrix | `fields` |
 | Orientation of facets | a facet's conormal ν_f is that of its own orientation (a 2-cell's normal by the right-hand rule round its attaching word); σ(i, f) = +1 when ν_f points out of the top cell i; the incidences satisfy d(i, f) = o_i σ(i, f) | `discretisation` |
 | Fluxes of a balance law | J_f through a facet along its conormal, from the cell behind it to the cell ahead; a cell's energy changes by −h Σ_f σ(i, f) J_f | `continuum` |
+| Kinematic waves (decision 0016) | a link runs from its tail to its head; densities per metre of link, flows per second; a state holds each link's cells from tail to head; interface 0 at the tail, C at the head; a node's incoming and outgoing links, the rows and columns of its turning fractions β, in the order of the links' indices; boundary data read at the start of a step | `continuum` |
+| Graph Laplacian (decision 0016) | L = degree − adjacency (weighted, or divided by a spacing squared), symmetric positive semidefinite with zero row sums; diffusion enters as −L D c; a graph's transport flux F_e from an edge's first vertex to its second | `continuum`, `chemistry` |
+| Markov jump processes (decision 0016) | k_ij the rate from i to j (the diagonal of the matrix ignored); distributions are row vectors, dp/dt = pQ; the stationary current J_ij = π_i k_ij − π_j k_ji; entropy production in units of k_B per unit time, relative entropies and mixing in nats | `statistical_mechanics` |
 | Fourier transform | to be fixed with the transforms of `analysis` and `discretisation` | — |
 
 ## 2. Notation
