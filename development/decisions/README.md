@@ -26,6 +26,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0015](0015-stationary-random-fields.md) | Stationary random fields read at any point | Accepted, provisionally |
 | [0016](0016-kinematic-waves-master-equations-and-reaction-diffusion.md) | Kinematic waves, master equations, and reaction–diffusion on graphs | Accepted, provisionally |
 | [0017](0017-bodies-in-a-fluid-and-lagrangian-dynamics.md) | Bodies in a fluid, and the Euler–Lagrange equations solved for the acceleration | Accepted, provisionally |
+| [0018](0018-composition-lumping-hybrid-processes-and-memory.md) | Open systems composed, what coarse descriptions forget, hybrid processes, memory, and fields on cells | Accepted, provisionally |
 
 ## 2. Template
 

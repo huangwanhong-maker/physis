@@ -6,4 +6,5 @@ target_link_libraries(physis_chemistry INTERFACE morphe::algebra morphe::arithme
 if(PHYSIS_CHECKS)
   calx_add_check(check_physis_kinetics SOURCES tests/check_kinetics.cpp LIBRARIES physis::chemistry calx::integrators)
   calx_add_check(check_physis_reaction_diffusion SOURCES tests/check_reaction_diffusion.cpp LIBRARIES physis::chemistry calx::random)
+  calx_add_check(check_physis_doi_peliti SOURCES tests/check_doi_peliti.cpp LIBRARIES physis::chemistry)
 endif()

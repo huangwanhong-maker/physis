@@ -6,4 +6,5 @@ target_link_libraries(physis_discretisation INTERFACE morphe::topology morphe::c
 if(PHYSIS_CHECKS)
   calx_add_check(check_physis_cochains SOURCES tests/check_cochains.cpp LIBRARIES physis::discretisation calx::random)
   calx_add_check(check_physis_geometric SOURCES tests/check_geometric.cpp LIBRARIES physis::discretisation calx::random)
+  calx_add_check(check_physis_hodge_laplacian SOURCES tests/check_hodge_laplacian.cpp LIBRARIES physis::discretisation calx::random)
 endif()

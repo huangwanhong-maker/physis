@@ -4,4 +4,5 @@ target_include_directories(physis_computational_geometry INTERFACE ${CMAKE_CURRE
 target_compile_features(physis_computational_geometry INTERFACE cxx_std_20)
 if(PHYSIS_CHECKS)
   calx_add_check(check_physis_sphere SOURCES tests/check_sphere.cpp LIBRARIES physis::computational_geometry calx::random)
+  calx_add_check(check_physis_planar SOURCES tests/check_planar.cpp LIBRARIES physis::computational_geometry)
 endif()
