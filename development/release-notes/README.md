@@ -13,7 +13,7 @@ A running record, for readers, of what each commit made possible or better. It i
 
 | Date | Commits |
 |---|---|
-| [2026-11-04](2026-11-04.md) | Triangle surfaces in space: their sections, the solids they bound, and close pairs of points |
+| [2026-11-04](2026-11-04.md) | Chains on a classified set, and the probability of a record of events; triangle surfaces in space: their sections, the solids they bound, and close pairs of points |
 | [2026-10-31](2026-10-31.md) | Open systems composed, what coarse descriptions forget, hybrid processes, memory, and fields on cells; kinematic waves, master equations, and reaction–diffusion on graphs; bodies with joints, random fields read anywhere, and bodies in a fluid |
 | [2026-10-30](2026-10-30.md) | Contributors, their terms, and a steward |
 | [2026-10-29](2026-10-29.md) | Fields as sections and their first balance law; motion from a discrete action, rigid bodies, and the law of a field known in part; point groups, field theories on finite groups, and reaction kinetics; potential fields outside a sphere, their spectra, and random fields |
