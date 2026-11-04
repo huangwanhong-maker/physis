@@ -27,6 +27,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0016](0016-kinematic-waves-master-equations-and-reaction-diffusion.md) | Kinematic waves, master equations, and reaction–diffusion on graphs | Accepted, provisionally |
 | [0017](0017-bodies-in-a-fluid-and-lagrangian-dynamics.md) | Bodies in a fluid, and the Euler–Lagrange equations solved for the acceleration | Accepted, provisionally |
 | [0018](0018-composition-lumping-hybrid-processes-and-memory.md) | Open systems composed, what coarse descriptions forget, hybrid processes, memory, and fields on cells | Accepted, provisionally |
+| [0019](0019-triangle-surfaces-their-sections-and-solids.md) | Triangle surfaces in space: their sections, the solids they bound, and close pairs of points | Accepted, provisionally |
 
 ## 2. Template
 

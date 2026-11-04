@@ -12,6 +12,14 @@
 // d_i = c_i − c. A solid box of sides a, b, c has J = (m/12) diag(b² + c², a² + c², a² + b²). The
 // principal axes diagonalise J, by calx's symmetric eigensolver.
 //
+// A solid bounded by a closed triangle surface oriented outward (decision 0019) is the signed sum of the
+// tetrahedra joining a reference point o to its triangles (the divergence theorem). For the tetrahedron with
+// vertices o, a, b, c (relative to o) the volume is V = det[a b c]/6, the first moment ∫ x dV = V (a + b + c)/4,
+// and the second moment ∫ x_i x_j dV = (V/20) (Σ_k p_k,i p_k,j + (Σ_k p_k,i)(Σ_k p_k,j)), p_k ∈ {a, b, c}
+// (Tonon 2004, Explicit exact formulas for the 3-D tetrahedron inertia tensor in terms of its vertex
+// coordinates, J. Math. Stat. 1, 8, eq. 2 with the vertex at the origin dropping out). o is the mean of the
+// corners, which keeps the sums small where the solid is far from the origin.
+//
 // Motion. The discrete Lagrangian of a rigid body (Lee, Leok and McClamroch 2007, Lie group variational
 // integrators for the full body problem, Comput. Methods Appl. Mech. Engrg. 196, 2907–2924, §3)
 //   L_d = (m/2h)|x_{k+1} − x_k|² + (1/h) tr[(I − F_k) J_d] − (h/2)(U_k + U_{k+1}),   F_k = R_kᵀ R_{k+1},
@@ -77,6 +85,51 @@ inline MassProperties solid_box(const Vec3& lower, const Vec3& upper, double den
   P.centre = {0.5 * (lower[0] + upper[0]), 0.5 * (lower[1] + upper[1]), 0.5 * (lower[2] + upper[2])};
   const double k = P.mass / 12;
   P.inertia = {{{k * (b * b + c * c), 0, 0}, {0, k * (a * a + c * c), 0}, {0, 0, k * (a * a + b * b)}}};
+  return P;
+}
+
+// The solid bounded by a closed triangle surface oriented outward (corners counter-clockwise seen from
+// outside), of uniform density. A surface oriented inward, or not closed, has no solid: a volume that is not
+// positive is refused; closure is the caller's to establish (morphe's classification of surfaces).
+inline MassProperties solid_polyhedron(const std::vector<Vec3>& points, const std::vector<std::array<std::size_t, 3>>& triangles, double density) {
+  if (!(density >= 0)) throw std::invalid_argument("physis::mechanics::solid_polyhedron: a density of zero or more");
+  if (points.empty() || triangles.empty()) throw std::invalid_argument("physis::mechanics::solid_polyhedron: a surface with triangles");
+  Vec3 o{};
+  for (const auto& p : points)
+    for (int i = 0; i < 3; i++) o[i] += p[i] / static_cast<double>(points.size());
+  double volume = 0;
+  Vec3 first{};
+  Mat3 second{};
+  for (const auto& t : triangles) {
+    std::array<Vec3, 3> p;
+    for (int k = 0; k < 3; k++)
+      for (int i = 0; i < 3; i++) p[k][i] = points.at(t[k])[i] - o[i];
+    const double v = geometry::dot(p[0], geometry::cross(p[1], p[2])) / 6;
+    Vec3 s{};
+    for (int k = 0; k < 3; k++)
+      for (int i = 0; i < 3; i++) s[i] += p[k][i];
+    volume += v;
+    for (int i = 0; i < 3; i++) first[i] += v * s[i] / 4;
+    for (int i = 0; i < 3; i++)
+      for (int j = 0; j < 3; j++) {
+        double q = s[i] * s[j];
+        for (int k = 0; k < 3; k++) q += p[k][i] * p[k][j];
+        second[i][j] += v * q / 20;
+      }
+  }
+  if (!(volume > 0)) throw std::invalid_argument("physis::mechanics::solid_polyhedron: the surface encloses no positive volume (open, or oriented inward)");
+  MassProperties P;
+  P.mass = density * volume;
+  Vec3 c{};
+  for (int i = 0; i < 3; i++) c[i] = first[i] / volume;
+  P.centre = {o[0] + c[0], o[1] + c[1], o[2] + c[2]};
+  // Second moments about the centre: S_c = S_o − V c cᵀ; J = ρ (tr(S_c) I − S_c).
+  Mat3 S{};
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++) S[i][j] = second[i][j] - volume * c[i] * c[j];
+  const double tr = S[0][0] + S[1][1] + S[2][2];
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++) P.inertia[i][j] = density * ((i == j ? tr : 0) - S[i][j]);
   return P;
 }
 
