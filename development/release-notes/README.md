@@ -13,6 +13,7 @@ A running record, for readers, of what each commit made possible or better. It i
 
 | Date | Commits |
 |---|---|
+| [2026-11-06](2026-11-06.md) | The laws beneath physical computing: chaos, bifurcations, waves, convection, two-layer flow, networks, fluctuations and stiff chemistry in space |
 | [2026-11-04](2026-11-04.md) | Chains on a classified set, and the probability of a record of events; triangle surfaces in space: their sections, the solids they bound, and close pairs of points |
 | [2026-10-31](2026-10-31.md) | Open systems composed, what coarse descriptions forget, hybrid processes, memory, and fields on cells; kinematic waves, master equations, and reaction–diffusion on graphs; bodies with joints, random fields read anywhere, and bodies in a fluid |
 | [2026-10-30](2026-10-30.md) | Contributors, their terms, and a steward |

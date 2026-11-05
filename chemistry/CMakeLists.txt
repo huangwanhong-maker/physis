@@ -4,6 +4,8 @@ target_include_directories(physis_chemistry INTERFACE ${CMAKE_CURRENT_SOURCE_DIR
 target_compile_features(physis_chemistry INTERFACE cxx_std_20)
 target_link_libraries(physis_chemistry INTERFACE morphe::algebra morphe::arithmetic calx::random calx::linalg)
 if(PHYSIS_CHECKS)
+  calx_add_check(check_physis_dual_rail SOURCES tests/check_dual_rail.cpp LIBRARIES physis::chemistry physis::dynamics calx::random)
+  calx_add_check(check_physis_field_kinetics SOURCES tests/check_field_kinetics.cpp LIBRARIES physis::chemistry)
   calx_add_check(check_physis_kinetics SOURCES tests/check_kinetics.cpp LIBRARIES physis::chemistry calx::integrators)
   calx_add_check(check_physis_reaction_diffusion SOURCES tests/check_reaction_diffusion.cpp LIBRARIES physis::chemistry calx::random)
   calx_add_check(check_physis_doi_peliti SOURCES tests/check_doi_peliti.cpp LIBRARIES physis::chemistry)
