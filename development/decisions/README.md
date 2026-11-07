@@ -30,6 +30,7 @@ Each record captures one decision that shapes the structure, interfaces or tooli
 | [0019](0019-triangle-surfaces-their-sections-and-solids.md) | Triangle surfaces in space: their sections, the solids they bound, and close pairs of points | Accepted, provisionally |
 | [0020](0020-chains-on-a-classified-set-and-the-probability-of-a-record.md) | Chains on a classified set, and the probability of a record of events | Accepted, provisionally |
 | [0022](0022-the-laws-beneath-physical-computing.md) | The laws beneath physical computing: chaos and bifurcations, waves and rotating flow, networks of conductances, fluctuations, kinetics of any form and dual rails | Accepted, provisionally |
+| [0023](0023-h3.md) | H3, the hexagonal grid of the Earth | Accepted, provisionally |
 
 ## 2. Template
 
